@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kali Linux Online</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 任务栏 -->
+    <div class="taskbar">
+        <div class="taskbar-left">
+            <div class="start-button" id="startButton">
+                <i class="fas fa-terminal"></i>
+            </div>
+            <div class="taskbar-icons">
+                <div class="taskbar-icon active">
+                    <i class="fas fa-desktop"></i>
+                    <span>桌面</span>
+                </div>
+                <div class="taskbar-icon">
+                    <i class="fas fa-terminal"></i>
+                    <span>终端</span>
+                </div>
+                <div class="taskbar-icon">
+                    <i class="fas fa-search"></i>
+                    <span>Nmap</span>
+                </div>
+                <div class="taskbar-icon">
+                    <i class="fas fa-bug"></i>
+                    <span>Metasploit</span>
+                </div>
+            </div>
+        </div>
+        <div class="taskbar-right">
+            <div class="system-time" id="systemTime"></div>
+            <div class="system-status">
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-volume-up"></i>
+                <i class="fas fa-battery-three-quarters"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- 桌面 -->
+    <div class="desktop">
+        <div class="desktop-icons">
+            <div class="desktop-icon">
+                <i class="fas fa-folder"></i>
+                <span>主目录</span>
+            </div>
+            <div class="desktop-icon">
+                <i class="fas fa-terminal"></i>
+                <span>终端</span>
+            </div>
+            <div class="desktop-icon">
+                <i class="fas fa-search"></i>
+                <span>Nmap</span>
+            </div>
+            <div class="desktop-icon">
+                <i class="fas fa-bug"></i>
+                <span>Metasploit</span>
+            </div>
+            <div class="desktop-icon">
+                <i class="fas fa-lock"></i>
+                <span>Burp Suite</span>
+            </div>
+            <div class="desktop-icon">
+                <i class="fas fa-key"></i>
+                <span>John the Ripper</span>
+            </div>
+            <div class="desktop-icon">
+                <i class="fas fa-network-wired"></i>
+                <span>Wireshark</span>
+            </div>
+            <div class="desktop-icon">
+                <i class="fas fa-code"></i>
+                <span>Visual Studio Code</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 开始菜单 -->
+    <div class="start-menu" id="startMenu">
+        <div class="start-menu-header">
+            <i class="fas fa-terminal"></i>
+            <span>Kali Linux</span>
+        </div>
+        <div class="start-menu-search">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="搜索应用程序...">
+        </div>
+        <div class="start-menu-items">
+            <div class="start-menu-item">
+                <i class="fas fa-terminal"></i>
+                <span>终端</span>
+            </div>
+            <div class="start-menu-item">
+                <i class="fas fa-search"></i>
+                <span>Nmap</span>
+            </div>
+            <div class="start-menu-item">
+                <i class="fas fa-bug"></i>
+                <span>Metasploit</span>
+            </div>
+            <div class="start-menu-item">
+                <i class="fas fa-lock"></i>
+                <span>Burp Suite</span>
+            </div>
+            <div class="start-menu-item">
+                <i class="fas fa-key"></i>
+                <span>John the Ripper</span>
+            </div>
+            <div class="start-menu-item">
+                <i class="fas fa-network-wired"></i>
+                <span>Wireshark</span>
+            </div>
+            <div class="start-menu-item">
+                <i class="fas fa-code"></i>
+                <span>Visual Studio Code</span>
+            </div>
+            <div class="start-menu-item">
+                <i class="fas fa-globe"></i>
+                <span>Firefox</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右键菜单 -->
+    <div class="context-menu" id="desktopContextMenu">
+        <div class="context-menu-item" id="newFolder">
+            <i class="fas fa-folder"></i>
+            <span>新建文件夹</span>
+        </div>
+        <div class="context-menu-item" id="newFile">
+            <i class="fas fa-file"></i>
+            <span>新建文件</span>
+        </div>
+        <div class="context-menu-divider"></div>
+        <div class="context-menu-item" id="refresh">
+            <i class="fas fa-sync-alt"></i>
+            <span>刷新</span>
+        </div>
+        <div class="context-menu-divider"></div>
+        <div class="context-menu-item" id="terminalFromDesktop">
+            <i class="fas fa-terminal"></i>
+            <span>在终端中打开</span>
+        </div>
+        <div class="context-menu-divider"></div>
+        <div class="context-menu-item" id="desktopSettings">
+            <i class="fas fa-cog"></i>
+            <span>桌面设置</span>
+        </div>
+    </div>
+
+    <!-- 文件右键菜单 -->
+    <div class="context-menu" id="fileContextMenu">
+        <div class="context-menu-item" id="openFile">
+            <i class="fas fa-folder-open"></i>
+            <span>打开</span>
+        </div>
+        <div class="context-menu-divider"></div>
+        <div class="context-menu-item" id="renameFile">
+            <i class="fas fa-edit"></i>
+            <span>重命名</span>
+        </div>
+        <div class="context-menu-item" id="deleteFile">
+            <i class="fas fa-trash"></i>
+            <span>删除</span>
+        </div>
+        <div class="context-menu-divider"></div>
+        <div class="context-menu-item" id="propertiesFile">
+            <i class="fas fa-info-circle"></i>
+            <span>属性</span>
+        </div>
+    </div>
+
+    <!-- 窗口容器 -->
+    <div class="windows-container" id="windowsContainer">
+        <!-- 终端窗口 -->
+        <div class="window" id="terminalWindow">
+            <div class="window-header">
+                <div class="window-title">
+                    <i class="fas fa-terminal"></i>
+                    <span>终端</span>
+                </div>
+                <div class="window-controls">
+                    <button class="window-control minimize"><i class="fas fa-minus"></i></button>
+                    <button class="window-control maximize"><i class="fas fa-expand"></i></button>
+                    <button class="window-control close"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <span class="terminal-user">kali@kali</span>
+                        <span class="terminal-path">~</span>
+                        <span class="terminal-prompt">$</span>
+                    </div>
+                    <div class="terminal-body" id="terminalBody">
+                        <div class="terminal-line">
+                            <span class="terminal-output">Welcome to Kali Linux Online!</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">Type 'help' to see available commands.</span>
+                        </div>
+                    </div>
+                    <div class="terminal-input-line">
+                        <span class="terminal-user">kali@kali</span>
+                        <span class="terminal-path">~</span>
+                        <span class="terminal-prompt">$</span>
+                        <input type="text" class="terminal-input" id="terminalInput" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kali Linux Web</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 启动界面 -->
+    <div id="boot-screen" class="boot-screen">
+        <div class="boot-logo">
+            <i class="fas fa-shield-alt"></i>
+            <h1>Kali Linux</h1>
+        </div>
+        <div class="boot-progress">
+            <div class="progress-bar"></div>
+        </div>
+        <div id="boot-status" class="boot-status">正在启动...</div>
+    </div>
+
+    <!-- 登录界面 -->
+    <div id="login-screen" class="login-screen" style="display: none;">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Kali Linux</h2>
+            </div>
+            <div class="login-form">
+                <div class="input-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" value="kali">
+                </div>
+                <div class="input-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" value="kali">
+                </div>
+                <button onclick="login()">登录</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 桌面界面 -->
+    <div id="desktop" class="desktop" style="display: none;">
+        <!-- 右键菜单 -->
+        <div id="context-menu" class="context-menu" style="display: none;">
+            <div class="menu-item" onclick="refreshDesktop()">
+                <i class="fas fa-sync-alt"></i> 刷新
+            </div>
+            <div class="menu-item" onclick="createNewFolder()">
+                <i class="fas fa-folder-plus"></i> 新建文件夹
+            </div>
+            <div class="menu-item" onclick="openTerminal()">
+                <i class="fas fa-terminal"></i> 打开终端
+            </div>
+        </div>
+
+        <!-- 桌面图标 -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" onclick="openTerminal()">
+                <i class="fas fa-terminal"></i>
+                <span>终端</span>
+            </div>
+            <div class="desktop-icon" onclick="openFileManager()">
+                <i class="fas fa-folder"></i>
+                <span>文件管理器</span>
+            </div>
+            <div class="desktop-icon" onclick="openFirefox()">
+                <i class="fab fa-firefox-browser"></i>
+                <span>Firefox</span>
+            </div>
+            <div class="desktop-icon" onclick="openNmap()">
+                <i class="fas fa-network-wired"></i>
+                <span>Nmap</span>
+            </div>
+            <div class="desktop-icon" onclick="openMetasploit()">
+                <i class="fas fa-bug"></i>
+                <span>Metasploit</span>
+            </div>
+            <div class="desktop-icon" onclick="openSettings()">
+                <i class="fas fa-cog"></i>
+                <span>设置</span>
+            </div>
+        </div>
+
+        <!-- 任务栏 -->
+        <div class="taskbar">
+            <div class="start-button" onclick="toggleStartMenu()">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="taskbar-apps">
+                <div class="taskbar-app" onclick="toggleWindow('terminal')">
+                    <i class="fas fa-terminal"></i>
+                </div>
+                <div class="taskbar-app" onclick="toggleWindow('file-manager')">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <div class="taskbar-app" onclick="toggleWindow('firefox')">
+                    <i class="fab fa-firefox-browser"></i>
+                </div>
+            </div>
+            <div class="taskbar-right">
+                <div class="system-tray">
+                    <div class="tray-item">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <div class="tray-item">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <div class="tray-item">
+                        <i class="fas fa-battery-three-quarters"></i>
+                    </div>
+                </div>
+                <div class="clock" id="clock"></div>
+                <div class="notification-center" onclick="toggleNotificationCenter()">
+                    <i class="fas fa-bell"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 开始菜单 -->
+        <div id="start-menu" class="start-menu" style="display: none;">
+            <div class="start-menu-header">
+                <h3>Kali Linux</h3>
+            </div>
+            <div class="start-menu-items">
+                <div class="start-menu-item" onclick="openTerminal()">
+                    <i class="fas fa-terminal"></i>
+                    <span>终端</span>
+                </div>
+                <div class="start-menu-item" onclick="openFileManager()">
+                    <i class="fas fa-folder"></i>
+                    <span>文件管理器</span>
+                </div>
+                <div class="start-menu-item" onclick="openFirefox()">
+                    <i class="fab fa-firefox-browser"></i>
+                    <span>Firefox</span>
+                </div>
+                <div class="start-menu-item" onclick="openNmap()">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Nmap</span>
+                </div>
+                <div class="start-menu-item" onclick="openMetasploit()">
+                    <i class="fas fa-bug"></i>
+                    <span>Metasploit</span>
+                </div>
+                <div class="start-menu-item" onclick="openSettings()">
+                    <i class="fas fa-cog"></i>
+                    <span>设置</span>
+                </div>
+            </div>
+            <div class="start-menu-footer">
+                <div class="user-info">
+                    <i class="fas fa-user"></i>
+                    <span id="current-user">kali</span>
+                </div>
+                <div class="shutdown-button" onclick="shutdown()">
+                    <i class="fas fa-power-off"></i>
+                    <span>关机</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 通知中心 -->
+        <div id="notification-center" class="notification-center-panel" style="display: none;">
+            <div class="notification-center-header">
+                <h3>通知</h3>
+                <button onclick="clearNotifications()">清除全部</button>
+            </div>
+            <div class="notification-list" id="notification-list">
+                <!-- 通知将动态添加到这里 -->
+            </div>
+        </div>
+
+        <!-- 终端窗口 -->
+        <div id="terminal" class="window" style="display: none;">
+            <div class="window-header">
+                <div class="window-title">
+                    <i class="fas fa-terminal"></i>
+                    <span>终端</span>
+                </div>
+                <div class="window-controls">
+                    <button class="minimize-btn" onclick="minimizeWindow('terminal')">
+                        <i class="fas fa-window-minimize"></i>
+                    </button>
+                    <button class="maximize-btn" onclick="maximizeWindow('terminal')">
+                        <i class="fas fa-window-maximize"></i>
+                    </button>
+                    <button class="close-btn" onclick="closeWindow('terminal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="terminal-content">
+                    <div class="terminal-output" id="terminal-output">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">kali@kali:~$</span>
+                        </div>
+                    </div>
+                    <div class="terminal-input">
+                        <span class="terminal-prompt">kali@kali:~$</span>
+                        <input type="text" id="terminal-input" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文件管理器窗口 -->
+        <div id="file-manager" class="window" style="display: none;">
+            <div class="window-header">
+                <div class="window-title">
+                    <i class="fas fa-folder"></i>
+                    <span>文件管理器</span>
+                </div>
+                <div class="window-controls">
+                    <button class="minimize-btn" onclick="minimizeWindow('file-manager')">
+                        <i class="fas fa-window-minimize"></i>
+                    </button>
+                    <button class="maximize-btn" onclick="maximizeWindow('file-manager')">
+                        <i class="fas fa-window-maximize"></i>
+                    </button>
+                    <button class="close-btn" onclick="closeWindow('file-manager')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="file-manager-content">
+                    <div class="file-manager-toolbar">
+                        <button onclick="navigateUp()">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <div class="current-path" id="current-path">/home/kali</div>
+                    </div>
+                    <div class="file-list" id="file-list">
+                        <!-- 文件列表将动态添加到这里 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Firefox窗口 -->
+        <div id="firefox" class="window" style="display: none;">
+            <div class="window-header">
+                <div class="window-title">
+                    <i class="fab fa-firefox-browser"></i>
+                    <span>Firefox</span>
+                </div>
+                <div class="window-controls">
+                    <button class="minimize-btn" onclick="minimizeWindow('firefox')">
+                        <i class="fas fa-window-minimize"></i>
+                    </button>
+                    <button class="maximize-btn" onclick="maximizeWindow('firefox')">
+                        <i class="fas fa-window-maximize"></i>
+                    </button>
+                    <button class="close-btn" onclick="closeWindow('firefox')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="firefox-content">
+                    <div class="firefox-toolbar">
+                        <button>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <button>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button>
+                            <i class="fas fa-redo-alt"></i>
+                        </button>
+                        <div class="address-bar">
+                            <input type="text" value="https://www.kali.org">
+                        </div>
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="firefox-tabs">
+                        <div class="tab active">
+                            <span>Kali Linux</span>
+                            <button>
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="tab">
+                            <span>新标签页</span>
+                            <button>
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="firefox-webview">
+                        <iframe src="https://www.kali.org" frameborder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nmap窗口 -->
+        <div id="nmap" class="window" style="display: none;">
+            <div class="window-header">
+                <div class="window-title">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Nmap</span>
+                </div>
+                <div class="window-controls">
+                    <button class="minimize-btn" onclick="minimizeWindow('nmap')">
+                        <i class="fas fa-window-minimize"></i>
+                    </button>
+                    <button class="maximize-btn" onclick="maximizeWindow('nmap')">
+                        <i class="fas fa-window-maximize"></i>
+                    </button>
+                    <button class="close-btn" onclick="closeWindow('nmap')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="nmap-content">
+                    <div class="nmap-toolbar">
+                        <div class="input-group">
+                            <label for="nmap-target">目标</label>
+                            <input type="text" id="nmap-target" placeholder="192.168.1.1">
+                        </div>
+                        <div class="input-group">
+                            <label for="nmap-options">选项</label>
+                            <input type="text" id="nmap-options" placeholder="-sV -O">
+                        </div>
+                        <button onclick="runNmap()">
+                            <i class="fas fa-play"></i> 运行
+                        </button>
+                    </div>
+                    <div class="nmap-output" id="nmap-output">
+                        <!-- Nmap输出将显示在这里 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metasploit窗口 -->
+        <div id="metasploit" class="window" style="display: none;">
+            <div class="window-header">
+                <div class="window-title">
+                    <i class="fas fa-bug"></i>
+                    <span>Metasploit</span>
+                </div>
+                <div class="window-controls">
+                    <button class="minimize-btn" onclick="minimizeWindow('metasploit')">
+                        <i class="fas fa-window-minimize"></i>
+                    </button>
+                    <button class="maximize-btn" onclick="maximizeWindow('metasploit')">
+                        <i class="fas fa-window-maximize"></i>
+                    </button>
+                    <button class="close-btn" onclick="closeWindow('metasploit')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="metasploit-content">
+                    <div class="metasploit-prompt">
+                        <span>msf6 ></span>
+                        <input type="text" id="msf-input" autocomplete="off">
+                    </div>
+                    <div class="metasploit-output" id="msf-output">
+                        <!-- Metasploit输出将显示在这里 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 设置窗口 -->
+        <div id="settings" class="window" style="display: none;">
+            <div class="window-header">
+                <div class="window-title">
+                    <i class="fas fa-cog"></i>
+                    <span>设置</span>
+                </div>
+                <div class="window-controls">
+                    <button class="minimize-btn" onclick="minimizeWindow('settings')">
+                        <i class="fas fa-window-minimize"></i>
+                    </button>
+                    <button class="maximize-btn" onclick="maximizeWindow('settings')">
+                        <i class="fas fa-window-maximize"></i>
+                    </button>
+                    <button class="close-btn" onclick="closeWindow('settings')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="settings-content">
+                    <div class="settings-section">
+                        <h3>系统设置</h3>
+                        <div class="setting-item">
+                            <label>语言</label>
+                            <select>
+                                <option>中文</option>
+                                <option>English</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label>时间和日期</label>
+                            <input type="datetime-local">
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h3>显示设置</h3>
+                        <div class="setting-item">
+                            <label>分辨率</label>
+                            <select>
+                                <option>1024x768</option>
+                                <option>1366x768</option>
+                                <option>1920x1080</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label>壁纸</label>
+                            <div class="wallpaper-options">
+                                <div class="wallpaper-option active"></div>
+                                <div class="wallpaper-option"></div>
+                                <div class="wallpaper-option"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

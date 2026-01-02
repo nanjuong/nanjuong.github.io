@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  kali-linux:
+    build: .
+    container_name: kali-linux-vnc
+    restart: unless-stopped
+    ports:
+      - "6080:6080"
+      - "5901:5901"
+    networks:
+      - kali-network
+    # 网络隔离和安全限制
+    cap_add:
+      - NET_ADMIN
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    # 限制资源使用
+    mem_limit: 4g
+    cpus: 2
+    # 只读文件系统，除了必要的目录
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/tmp
+      - /run
+    volumes:
+      - kali-home:/home/kali
+      - kali-var-lib:/var/lib
+      - kali-var-log:/var/log
+
+volumes:
+  kali-home:
+  kali-var-lib:
+  kali-var-log:
+
+networks:
+  kali-network:
+    driver: bridge
+    # 禁用IPv6
+    enable_ipv6: false
+    # 网络隔离配置
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
+    # 限制容器间通信
+    internal: false
